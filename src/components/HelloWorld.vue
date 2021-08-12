@@ -25,6 +25,9 @@
   <template v-slot:content>content.....</template>
 </RenderTest>
 
+<!-- 函数式组件 -->
+<Functional level="3">z这个一个动态h元素</Functional>
+
 </template>
 
 <script>
@@ -33,6 +36,7 @@ import Composition from './Composition.vue'
 import ModelButton from './ModelButton.vue'
 import VmodelTest  from './VmodelTest.vue'
 import Emits from './Emits.vue'
+import Functional from './Functional.vue'
 export default {
   name: 'HelloWorld',
   props: {
@@ -49,6 +53,7 @@ export default {
         type: Number,
         default: 0
       },
+      Functional
     },
       render() {
         this.$slots.default()
