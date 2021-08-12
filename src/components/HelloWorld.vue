@@ -10,12 +10,28 @@
 
 <!--Emit选项-->
 <Emits @my-click="onClick"></Emits>
+
+<!--实例方法定义组件-->
+<comp></comp>
+
+<!--v-model的使用 -->
+<VmodelTest v-model:counter="counter"></VmodelTest>
+<!--等效于-->
+<!-- <VmodelTest :counter="counter" @update:counter="counter"></VmodelTest> -->
+
+<!-- render api 发生变化 -->
+<RenderTest v-model:counter="counter">
+  <template>title</template>
+  <template v-slot:content>content.....</template>
+</RenderTest>
+
 </template>
 
 <script>
-import { reactive,computed,onMounted, onUnmounted, ref, watch,toRefs } from 'vue'
+import { reactive,computed,onMounted, onUnmounted, ref, watch,toRefs, h } from 'vue'
 import Composition from './Composition.vue'
 import ModelButton from './ModelButton.vue'
+import VmodelTest  from './VmodelTest.vue'
 import Emits from './Emits.vue'
 export default {
   name: 'HelloWorld',
@@ -25,7 +41,27 @@ export default {
   components: {
     Composition,
     ModelButton,
-    Emits
+    Emits,
+    VmodelTest,
+    RenderTest: {
+      props:{
+      counter: {
+        type: Number,
+        default: 0
+      },
+    },
+      render() {
+        this.$slots.default()
+        this.$slots.content()
+        return h('div',[
+          h ('div', { onClick: this.onClick}, [
+            `I am RenderTest: ${this.counter}`,
+            this.$slots.default(),
+            this.$slots.content()
+          ])
+        ]);
+      },
+    },
   },
  setup() {
    const {counter,doubleCounter} = useCounter()
@@ -39,7 +75,7 @@ export default {
  },
  methods: {
    onClick() {
-     console.log("click me!");
+     this.$emit('update:counter',this.counter + 1)
    }
  }
 }
