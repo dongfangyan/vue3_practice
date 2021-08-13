@@ -28,10 +28,13 @@
 <!-- 函数式组件 -->
 <Functional level="3">z这个一个动态h元素</Functional>
 
+<!-- 异步组件 -->
+<AsyncComp></AsyncComp>
+
 </template>
 
 <script>
-import { reactive,computed,onMounted, onUnmounted, ref, watch,toRefs, h } from 'vue'
+import { reactive,computed,onMounted, onUnmounted, ref, watch,toRefs, h, defineAsyncComponent } from 'vue'
 import Composition from './Composition.vue'
 import ModelButton from './ModelButton.vue'
 import VmodelTest  from './VmodelTest.vue'
@@ -53,7 +56,8 @@ export default {
         type: Number,
         default: 0
       },
-      Functional
+      Functional,
+      AsyncComp:defineAsyncComponent(() => import('./NextPage.vue'))//Vue 3.x 中，异步组件的导入需要使用辅助函数defineAsyncComponent来进行显式声明
     },
       render() {
         this.$slots.default()
