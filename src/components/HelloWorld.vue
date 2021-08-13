@@ -29,7 +29,10 @@
 <Functional level="3">z这个一个动态h元素</Functional>
 
 <!-- 异步组件 -->
-<AsyncComp></AsyncComp>
+<AsyncPage />
+
+<!--编程方式发送和监听事件 -->
+<button @click="sendMsg">emit event</button>
 
 </template>
 
@@ -40,6 +43,12 @@ import ModelButton from './ModelButton.vue'
 import VmodelTest  from './VmodelTest.vue'
 import Emits from './Emits.vue'
 import Functional from './Functional.vue'
+
+//事件派发和监听
+import mitt from 'mitt'
+
+export const emitter = mitt()
+
 export default {
   name: 'HelloWorld',
   props: {
@@ -50,14 +59,14 @@ export default {
     ModelButton,
     Emits,
     VmodelTest,
+     Functional,
+      AsyncPage: defineAsyncComponent(() => import("./NextPage.vue")),//Vue 3.x 中，异步组件的导入需要使用辅助函数defineAsyncComponent来进行显式声明
     RenderTest: {
       props:{
       counter: {
         type: Number,
         default: 0
       },
-      Functional,
-      AsyncComp:defineAsyncComponent(() => import('./NextPage.vue'))//Vue 3.x 中，异步组件的导入需要使用辅助函数defineAsyncComponent来进行显式声明
     },
       render() {
         this.$slots.default()
@@ -85,6 +94,9 @@ export default {
  methods: {
    onClick() {
      this.$emit('update:counter',this.counter + 1)
+   },
+   sendMsg(){
+    emitter.emit('someEvent', 'fooo')
    }
  }
 }
