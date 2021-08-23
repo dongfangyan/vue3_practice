@@ -31,6 +31,9 @@
 <!-- 异步组件 -->
 <AsyncPage />
 
+<!-- 自定义指令 -->
+<p v-highlight="'green'">highlight this text!!!</p>
+
 <!--编程方式发送和监听事件 -->
 <button @click="sendMsg">emit event</button>
 

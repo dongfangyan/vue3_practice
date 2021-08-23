@@ -2,12 +2,19 @@ import { createApp, createRenderer, h } from 'vue'
 import App from './App.vue'
 import './index.css'
 import CanvasApp from './CanvasApp.vue'
+import EditTodo from './components/todos/EditTodo.vue'
 
  createApp(App)
  .component('comp',{
    render () {
      return h('div', 'I am comp')
    }
+ })
+ .component('EditTodo',EditTodo)
+ .directive('highlight',{
+     beforeMount(el, bingding, vnode) {
+         el.style.background = bingding.value
+     }
  })
  .mount('#app')
 
