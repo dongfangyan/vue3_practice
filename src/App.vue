@@ -1,7 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
-  <Todos></Todos>
+  <!-- <HelloWorld msg="Hello Vue 3.0 + Vite" />
+  <Todos></Todos> -->
+  
+  <router-view  v-slot="{Component}">
+     <keep-alive>
+       <component :is="Component"></component>
+     </keep-alive>
+  </router-view>
+  
 </template>
 
 <script>

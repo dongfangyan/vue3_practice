@@ -3,8 +3,50 @@ import App from './App.vue'
 import './index.css'
 import CanvasApp from './CanvasApp.vue'
 import EditTodo from './components/todos/EditTodo.vue'
+import Todos from './components/todos/Todos.vue'
+import Dashboard from './components/Dashboard.vue'
+import NotFound from './components/NotFound.vue'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+    mode: 'history',
+    history: createWebHistory('/base-directory'),
+    routes: [
+        {path: '/',component: Dashboard},
+        {path: '/todos',component: Todos},
+        {path: '/:pathMatch(.*)*',name:"not-found", component: NotFound},
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        //{x:10, y:10} now{left:10, top:10}
+        if(savedPosition) {
+            return savedPosition
+        } else {
+            return {top: 0}
+        }
+    }
+})
+
+//特性：动态路由
+router.addRoute({
+    path: '/about',
+    name: 'about',
+    component: () => import('./components/About.vue')
+})
+
+router.addRoute({
+    path: '/about/info',
+    component: {
+        render() {
+            return h('div', 'info page')
+        }
+    }
+})
+
+// composition
+
 
  createApp(App)
+ .use(router)
  .component('comp',{
    render () {
      return h('div', 'I am comp')
