@@ -7,6 +7,7 @@ import Todos from './components/todos/Todos.vue'
 import Dashboard from './components/Dashboard.vue'
 import NotFound from './components/NotFound.vue'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import { createStore } from 'vuex'
 
 const router = createRouter({
     mode: 'history',
@@ -22,6 +23,19 @@ const router = createRouter({
             return savedPosition
         } else {
             return {top: 0}
+        }
+    }
+})
+
+const store = createStore({
+    state() {
+        return {
+            count: 1
+        }
+    },
+    mutations: {
+        add(state) {
+            state.count++;
         }
     }
 })
@@ -47,6 +61,7 @@ router.addRoute({
 
  createApp(App)
  .use(router)
+ .use(store)
  .component('comp',{
    render () {
      return h('div', 'I am comp')
